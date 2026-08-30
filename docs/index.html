@@ -1,0 +1,974 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>我的福岡行</title></head><body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@500;600;700&family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600;700&display=swap');
+  :root {
+    /* 拾光 Shíguāng design tokens */
+    --bg: #f7f1e8;
+    --card: #fbf7f0;
+    --ink: #241f2b;
+    --ink-muted: #4a4350;
+    --line: #ddd0bd;
+    --accent: #4a3468;
+    --accent-soft: #efe4d3;
+    --accent-dark: #4a3468;
+    --warm: #c9702e;
+    --warm-soft: #f7e6d3;
+    --done: #5c7a52;
+    --done-soft: #e6ecdf;
+    --gradient-dusk: linear-gradient(135deg,#f2994a 0%,#d95c8f 52%,#6a4c93 100%);
+    --font-display: 'Newsreader', 'Noto Serif TC', serif;
+    --font-body: 'Work Sans', 'Noto Sans TC', 'PingFang TC', sans-serif;
+    --font-hand: 'Caveat', 'Noto Sans TC', cursive;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1522;
+      --card: #241f2b;
+      --ink: #f7f1e8;
+      --ink-muted: #c9bfd4;
+      --line: #3a3240;
+      --accent: #b79bd9;
+      --accent-soft: #332a44;
+      --accent-dark: #d3c0ec;
+      --warm: #f2994a;
+      --warm-soft: #3a2a22;
+      --done: #93b586;
+      --done-soft: #26301f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1522;
+    --card: #241f2b;
+    --ink: #f7f1e8;
+    --ink-muted: #c9bfd4;
+    --line: #3a3240;
+    --accent: #b79bd9;
+    --accent-soft: #332a44;
+    --accent-dark: #d3c0ec;
+    --warm: #f2994a;
+    --warm-soft: #3a2a22;
+    --done: #93b586;
+    --done-soft: #26301f;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); }
+  .fk-page {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+  .fk-wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 34px; }
+  .fk-page a { color: var(--accent-dark); text-decoration: none; }
+  .fk-page h1, .fk-page h2, .fk-page h3 { margin: 0; font-weight: 600; font-family: var(--font-display); }
+  .fk-header { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line); padding: 22px 18px 26px; position: relative; margin: -20px -14px 0; overflow: hidden; }
+  .fk-header::after { content: ''; position: absolute; inset: 0; background: var(--gradient-dusk); opacity: .1; z-index: 0; pointer-events: none; }
+  .fk-header > * { position: relative; z-index: 1; }
+  .fk-header::before { content: ''; display: block; width: 56px; height: 4px; background: var(--gradient-dusk); border-radius: 2px; margin-bottom: 6px; position: relative; z-index: 1; }
+  .fk-eyebrow { font-family: var(--font-hand); font-size: 19px; letter-spacing: .02em; color: var(--warm); font-weight: 600; transform: rotate(-1.5deg); display: inline-block; }
+  .fk-title { font-size: clamp(1.9rem, 5vw, 2.5rem); letter-spacing: -.01em; }
+  .fk-sub { font-size: 14px; color: var(--ink-muted); font-family: var(--font-body); }
+
+  .fk-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 8px; background: var(--bg); padding: 10px 0; margin: -10px 0 0; }
+  .fk-nav a { flex: 1; text-align: center; font-size: 13px; font-weight: 600; padding: 9px 4px; border-radius: 2px; background: var(--card); border: 1px solid var(--line); color: var(--ink); }
+  .fk-nav a:active { background: var(--accent-soft); }
+
+  .fk-quickgrid { display: flex; flex-direction: column; gap: 10px; }
+  .fk-quickcard { background: var(--card); border-radius: 2px; border-left: 3px solid var(--warm); box-shadow: 0 2px 10px rgba(36,31,43,.08); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .fk-quicklabel { font-family: var(--font-hand); font-size: 16px; color: var(--warm); font-weight: 600; transform: rotate(-1.5deg); display: inline-block; }
+  .fk-quickmain { font-size: 15px; font-weight: 600; }
+  .fk-quickdetail { font-size: 13px; color: var(--ink-muted); }
+  @media (min-width: 560px) {
+    .fk-quickgrid { flex-direction: row; }
+    .fk-quickcard { flex: 1; }
+  }
+
+  .fk-section { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 60px; }
+  .fk-sectitle { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .fk-sectitle h2 { font-size: 21px; }
+  .fk-sechint { font-size: 12px; color: var(--ink-muted); }
+
+  details.fk-day, details.fk-area { background: var(--card); border-radius: 2px; overflow: hidden; box-shadow: 0 2px 10px rgba(36,31,43,.08); }
+  details.fk-day > summary, details.fk-area > summary {
+    list-style: none; cursor: pointer; padding: 14px 16px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--accent-soft); color: var(--accent-dark); font-size: 15px; font-weight: 600; font-family: var(--font-display);
+  }
+  details.fk-day > summary::-webkit-details-marker, details.fk-area > summary::-webkit-details-marker { display: none; }
+  .fk-sumsub { font-size: 12px; font-weight: 500; color: var(--accent-dark); opacity: 0.85; font-family: var(--font-body); }
+  .fk-chevron { transition: transform 0.15s ease; font-size: 12px; }
+  details[open] .fk-chevron { transform: rotate(90deg); }
+
+  .fk-timeline { display: flex; flex-direction: column; }
+  .fk-titem { display: flex; gap: 12px; padding: 11px 16px; border-top: 1px solid var(--line); position: relative; }
+  .fk-titem::before { content: ''; position: absolute; left: 6px; top: 18px; width: 6px; height: 6px; border-radius: 50%; background: var(--warm); }
+  .fk-ttime { flex: 0 0 82px; font-size: 12.5px; font-weight: 700; color: var(--warm); padding-top: 1px; padding-left: 10px; }
+  .fk-tdesc { font-size: 14px; }
+
+  .fk-subhead { font-size: 12px; font-weight: 700; color: var(--ink-muted); letter-spacing: 1px; padding: 10px 16px 2px; border-top: 1px solid var(--line); }
+  .fk-item { display: flex; gap: 10px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--line); }
+  .fk-iteminfo { flex: 1; min-width: 0; }
+  .fk-itemname { font-size: 14px; font-weight: 500; }
+  .fk-itemnote { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .fk-status { flex: 0 0 auto; border: none; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--warm-soft); color: var(--warm); cursor: pointer; white-space: nowrap; }
+  .fk-status.done { background: var(--done-soft); color: var(--done); }
+  .fk-item.is-done .fk-itemname { color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--line); }
+
+  .fk-filterbar { display: flex; gap: 8px; }
+  .fk-filterbtn { flex: 1; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 13px; font-weight: 600; padding: 8px; border-radius: 2px; cursor: pointer; }
+  .fk-filterbtn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fk-item.fk-hide { display: none; }
+
+  .fk-maplink { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 16px; border-top: 1px solid var(--line); font-size: 14px; min-height: 44px; }
+  .fk-maplink .fk-arrow { color: var(--accent); font-size: 16px; flex: 0 0 auto; }
+  .fk-maplink:active { background: var(--accent-soft); }
+
+  .fk-tip { font-size: 12.5px; color: var(--ink-muted); background: var(--card); border: 1px dashed var(--line); border-radius: 2px; padding: 10px 12px; }
+  .fk-tip code { background: var(--accent-soft); padding: 1px 5px; border-radius: 2px; font-size: 11.5px; }
+
+  .fk-footer { border-top: 1px solid var(--line); padding-top: 16px; font-size: 12px; color: var(--ink-muted); display: flex; justify-content: space-between; }
+
+  .fk-top { position: fixed; right: 16px; bottom: 16px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; border: none; font-size: 18px; box-shadow: 0 18px 40px -16px rgba(74,52,104,.3); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 6; }
+  .fk-top.show { opacity: 1; pointer-events: auto; }
+
+  /* 重要提醒卡片 */
+  .fk-reminder { background: var(--warm-soft); border: 1px solid var(--warm); border-radius: 2px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .fk-reminder-title { font-family: var(--font-hand); font-size: 17px; font-weight: 600; color: var(--warm); transform: rotate(-1deg); display: inline-block; }
+  .fk-reminder-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; border-top: 1px dashed var(--line); padding-top: 8px; }
+  .fk-reminder-item:first-of-type { border-top: none; padding-top: 0; }
+  .fk-reminder-main { font-weight: 600; }
+  .fk-reminder-sub { color: var(--ink-muted); font-size: 12px; margin-top: 2px; }
+  .fk-reminder-sub a { color: var(--ink-muted); text-decoration: underline; }
+  .fk-reminder-call { flex: 0 0 auto; background: var(--accent); color: #fff; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+  /* 完成度總覽 */
+  .fk-progress { display: flex; flex-direction: column; gap: 6px; }
+  .fk-progress-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12.5px; color: var(--ink-muted); }
+  .fk-progress-top strong { color: var(--ink); font-size: 14px; }
+  .fk-progress-track { height: 8px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; }
+  .fk-progress-fill { height: 100%; background: var(--gradient-dusk); width: 0%; transition: width .3s ease; border-radius: 999px; }
+
+  /* 今天標記 */
+  .fk-today-tag { font-family: var(--font-hand); font-size: 12px; font-weight: 700; color: #fff; background: var(--warm); padding: 2px 9px; border-radius: 999px; transform: rotate(-2deg); display: inline-block; margin-left: 6px; }
+
+  /* 地圖嵌入 */
+  .fk-maptabs { display: flex; gap: 8px; }
+  .fk-maptab { flex: 1; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 12.5px; font-weight: 600; padding: 8px; border-radius: 2px; cursor: pointer; }
+  .fk-maptab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fk-mapembed { position: relative; width: 100%; padding-top: 56%; border-radius: 2px; overflow: hidden; box-shadow: 0 2px 10px rgba(36,31,43,.08); display: none; }
+  .fk-mapembed.active { display: block; }
+  .fk-mapembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* 手機底部導覽 */
+  .fk-bottomnav { display: none; }
+  @media (max-width: 560px) {
+    .fk-nav { display: none; }
+    .fk-bottomnav {
+      display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 8;
+      background: var(--card); border-top: 1px solid var(--line);
+      box-shadow: 0 -4px 16px rgba(36,31,43,.1);
+      padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    }
+    .fk-bottomnav a { flex: 1; text-align: center; font-size: 11.5px; font-weight: 600; color: var(--ink-muted); padding: 6px 2px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; border-radius: 2px; text-decoration: none; }
+    .fk-bottomnav a .fk-bn-icon { font-size: 18px; }
+    .fk-bottomnav a.active { color: var(--accent); }
+    .fk-page { padding-bottom: 78px; }
+    .fk-top { bottom: 72px; }
+  }
+</style>
+<div class="fk-page">
+<div class="fk-wrap">
+
+  <div class="fk-header">
+    <div class="fk-eyebrow">FUKUOKA TRIP JOURNAL</div>
+    <h1 class="fk-title">我的福岡行</h1>
+    <div class="fk-sub">2026/09/02（三）— 2026/09/05（六）・4 人同行（爸・媽・姐・我）</div>
+  </div>
+
+  <div class="fk-nav">
+    <a href="#sec-1">行程表</a>
+    <a href="#sec-2">清單</a>
+    <a href="#sec-3">地圖</a>
+  </div>
+
+  <div class="fk-quickgrid">
+    <div class="fk-quickcard">
+      <div class="fk-quicklabel">✈ 去程</div>
+      <div class="fk-quickmain">BR106・09/02（三）</div>
+      <div class="fk-quickdetail">桃園 T2 08:00 → 福岡 T1 11:20</div>
+    </div>
+    <div class="fk-quickcard">
+      <div class="fk-quicklabel">✈ 回程</div>
+      <div class="fk-quickmain">BR105・09/05（六）</div>
+      <div class="fk-quickdetail">福岡 T1 12:20 → 桃園 T2 14:45</div>
+    </div>
+    <div class="fk-quickcard">
+      <div class="fk-quicklabel">🏨 住宿</div>
+      <div class="fk-quickmain">THE GATE HOTEL Fukuoka by HULIC</div>
+      <div class="fk-quickdetail">Scenic Double × 2 間・共 3 晚</div>
+    </div>
+  </div>
+
+  <div class="fk-reminder">
+    <div class="fk-reminder-title">✎ 別忘記</div>
+    <div class="fk-reminder-item">
+      <div>
+        <div class="fk-reminder-main">THE GATE HOTEL 訂房</div>
+        <div class="fk-reminder-sub">訂單 3791-1350-8203 / 3791-1352-6630</div>
+      </div>
+    </div>
+    <div class="fk-reminder-item">
+      <div>
+        <div class="fk-reminder-main">博多もつ鍋前田屋（Day1 19:30）</div>
+        <div class="fk-reminder-sub">已訂位 4 人</div>
+      </div>
+      <a class="fk-reminder-call" href="tel:05054873803">📞 撥打</a>
+    </div>
+    <div class="fk-reminder-item">
+      <div>
+        <div class="fk-reminder-main">藥院燒肉 NIKUICHI（Day2 20:30）</div>
+        <div class="fk-reminder-sub">預約ID NUYS6N，已確認</div>
+      </div>
+    </div>
+    <div class="fk-reminder-item">
+      <div>
+        <div class="fk-reminder-main">長榮航空 BR105 回程</div>
+        <div class="fk-reminder-sub">訂位代號 F3V6SR・09/05 12:20 起飛</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fk-section" id="sec-1">
+    <div class="fk-sectitle"><h2>一、行程表</h2><div class="fk-sechint">時間為預估，可依現場狀況調整</div></div>
+    <details class="fk-day" id="fk-day-1" data-date="2026-09-02">
+      <summary><span>Day 1・09/02（三）<span class="fk-sumsub"> 台北 → 福岡：博多半日</span><span class="fk-today-tag" data-today-tag style="display:none">今天</span></span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-timeline">
+        <div class="fk-titem"><div class="fk-ttime">11:20–13:15</div><div class="fk-tdesc">抵達福岡、入境、領行李</div></div>
+        <div class="fk-titem"><div class="fk-ttime">13:25–13:55</div><div class="fk-tdesc">福岡機場國際線 8 號站牌 → 搭 Airport Express → 天神</div></div>
+        <div class="fk-titem"><div class="fk-ttime">14:00</div><div class="fk-tdesc">THE GATE HOTEL Fukuoka by HULIC 寄放行李</div></div>
+        <div class="fk-titem"><div class="fk-ttime">14:20</div><div class="fk-tdesc">天神站搭空港線 → 祇園站</div></div>
+        <div class="fk-titem"><div class="fk-ttime">14:35–15:05</div><div class="fk-tdesc">櫛田神社</div></div>
+        <div class="fk-titem"><div class="fk-ttime">15:10–16:00</div><div class="fk-tdesc">午餐：博多一雙 祇園店</div></div>
+        <div class="fk-titem"><div class="fk-ttime">16:15–18:45</div><div class="fk-tdesc">步行至博多站，依序逛 AMU PLAZA → 博多阪急 → KITTE 博多</div></div>
+        <div class="fk-titem"><div class="fk-ttime">途中</div><div class="fk-tdesc">想吃小點只選一間：Dacomecca 或 The Full Full Hakata 外帶</div></div>
+        <div class="fk-titem"><div class="fk-ttime">19:00</div><div class="fk-tdesc">博多站博多口步行約 3 分鐘到餐廳</div></div>
+        <div class="fk-titem"><div class="fk-ttime">19:30</div><div class="fk-tdesc">晚餐：博多もつ鍋前田屋 博多店（4 名，已訂位，電話 <a href="tel:05054873803">050-5487-3803</a>）</div></div>
+        <div class="fk-titem"><div class="fk-ttime">晚餐後</div><div class="fk-tdesc">博多站搭空港線回天神飯店</div></div>
+      </div>
+    </details>
+    <details class="fk-day" id="fk-day-2" data-date="2026-09-03">
+      <summary><span>Day 2・09/03（四）<span class="fk-sumsub"> 天神百貨與街巷</span><span class="fk-today-tag" data-today-tag style="display:none">今天</span></span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-timeline">
+        <div class="fk-titem"><div class="fk-ttime">10:00–12:00</div><div class="fk-tdesc">福岡 PARCO 本館＋新館：HARE、BEAMS、URBAN RESEARCH、FREAK'S STORE</div></div>
+        <div class="fk-titem"><div class="fk-ttime">12:15–13:30</div><div class="fk-tdesc">午餐：葫蘆壽司（ひょうたん寿司）</div></div>
+        <div class="fk-titem"><div class="fk-ttime">13:40–15:30</div><div class="fk-tdesc">岩田屋本店 → 福岡三越 → Solaria Plaza → 大丸福岡天神店</div></div>
+        <div class="fk-titem"><div class="fk-ttime">15:30–16:10</div><div class="fk-tdesc">Blue Bottle Coffee 福岡天神 Cafe 休息</div></div>
+        <div class="fk-titem"><div class="fk-ttime">16:15–18:20</div><div class="fk-tdesc">今泉／大名街巷：Dice&amp;Dice → Graphpaper Fukuoka → FACTORY → BIOTOP Fukuoka</div></div>
+        <div class="fk-titem"><div class="fk-ttime">20:30</div><div class="fk-tdesc">晚餐：藥院燒肉 NIKUICHI（已訂位 4 人，預約ID NUYS6N）</div></div>
+      </div>
+    </details>
+    <details class="fk-day" id="fk-day-3" data-date="2026-09-04">
+      <summary><span>Day 3・09/04（五）<span class="fk-sumsub"> 太宰府一日</span><span class="fk-today-tag" data-today-tag style="display:none">今天</span></span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-timeline">
+        <div class="fk-titem"><div class="fk-ttime">08:30</div><div class="fk-tdesc">飯店步行至西鐵福岡（天神）站</div></div>
+        <div class="fk-titem"><div class="fk-ttime">08:45–09:25</div><div class="fk-tdesc">西鐵特急 → 西鐵二日市轉太宰府線 → 太宰府站</div></div>
+        <div class="fk-titem"><div class="fk-ttime">09:30–11:15</div><div class="fk-tdesc">太宰府天滿宮＋參道</div></div>
+        <div class="fk-titem"><div class="fk-ttime">11:15–11:45</div><div class="fk-tdesc">計程車前往大野城</div></div>
+        <div class="fk-titem"><div class="fk-ttime">12:00–13:15</div><div class="fk-tdesc">BALLER'S 福岡店</div></div>
+        <div class="fk-titem"><div class="fk-ttime">13:15–14:15</div><div class="fk-tdesc">計程車跨區前往東區和白丘</div></div>
+        <div class="fk-titem"><div class="fk-ttime">14:15–16:15</div><div class="fk-tdesc">ballaholic Hub FUKUOKA</div></div>
+        <div class="fk-titem"><div class="fk-ttime">16:15–18:00</div><div class="fk-tdesc">回天神飯店休息</div></div>
+        <div class="fk-titem"><div class="fk-ttime">18:30</div><div class="fk-tdesc">晚餐：黑毛和牛 博多和牛まぶし 武藏 天神店</div></div>
+      </div>
+    </details>
+    <details class="fk-day" id="fk-day-4" data-date="2026-09-05">
+      <summary><span>Day 4・09/05（六）<span class="fk-sumsub"> 返程日</span><span class="fk-today-tag" data-today-tag style="display:none">今天</span></span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-timeline">
+        <div class="fk-titem"><div class="fk-ttime">07:30–08:20</div><div class="fk-tdesc">早餐、整理、退房</div></div>
+        <div class="fk-titem"><div class="fk-ttime">08:40</div><div class="fk-tdesc">飯店步行至西鐵天神高速巴士總站</div></div>
+        <div class="fk-titem"><div class="fk-ttime">08:49–09:29</div><div class="fk-tdesc">Airport Express：天神 → 福岡機場國際線</div></div>
+        <div class="fk-titem"><div class="fk-ttime">09:30 起</div><div class="fk-tdesc">長榮報到、托運、安檢、免稅店（訂位代號 F3V6SR）</div></div>
+        <div class="fk-titem"><div class="fk-ttime">12:20</div><div class="fk-tdesc">BR105 福岡起飛</div></div>
+        <div class="fk-titem"><div class="fk-ttime">14:45</div><div class="fk-tdesc">抵達桃園機場 T2，結束旅程</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="fk-section" id="sec-2">
+    <div class="fk-sectitle"><h2>二、景點・美食・購物清單</h2><div class="fk-sechint">點狀態鈕即可切換完成／未完成</div></div>
+    <div class="fk-progress">
+      <div class="fk-progress-top"><span>完成進度</span><strong id="fk-progress-label">0 / 0</strong></div>
+      <div class="fk-progress-track"><div class="fk-progress-fill" id="fk-progress-fill"></div></div>
+    </div>
+    <div class="fk-filterbar">
+      <button class="fk-filterbtn active" data-filter="all">全部</button>
+      <button class="fk-filterbtn" data-filter="todo">未完成</button>
+      <button class="fk-filterbtn" data-filter="done">已完成</button>
+    </div>
+    <details class="fk-area" open>
+      <summary><span>博多（含博多站、祇園、中洲川端）</span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-subhead">景點</div>
+      <div class="fk-item" data-id="h1">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">櫛田神社</div>
+        </div>
+        <button class="fk-status" data-id="h1">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h2">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡麵包超人兒童博物館</div>
+          <div class="fk-itemnote">中洲川端</div>
+        </div>
+        <button class="fk-status" data-id="h2">☐ 未完成</button>
+      </div>
+      <div class="fk-subhead">逛街</div>
+      <div class="fk-item" data-id="h3">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">AMU PLAZA</div>
+          <div class="fk-itemnote">日系穿搭 ★</div>
+        </div>
+        <button class="fk-status" data-id="h3">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h4">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">KITTE 博多</div>
+          <div class="fk-itemnote">年輕品牌，8F 有 UNIQLO ★</div>
+        </div>
+        <button class="fk-status" data-id="h4">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h5">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多阪急</div>
+          <div class="fk-itemnote">精品，JR 博多站直結 ★</div>
+        </div>
+        <button class="fk-status" data-id="h5">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h6">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">BALLER'S</div>
+          <div class="fk-itemnote">籃球用品</div>
+        </div>
+        <button class="fk-status" data-id="h6">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h7">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">ballaholic Hub FUKUOKA</div>
+        </div>
+        <button class="fk-status" data-id="h7">☐ 未完成</button>
+      </div>
+      <div class="fk-subhead">飲食</div>
+      <div class="fk-item" data-id="h8">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">一蘭拉麵 總本店</div>
+          <div class="fk-itemnote">24 小時，中洲</div>
+        </div>
+        <button class="fk-status" data-id="h8">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h9">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多一雙拉麵店（中洲店）</div>
+        </div>
+        <button class="fk-status" data-id="h9">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h10">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多一雙 祇園店</div>
+          <div class="fk-itemnote">Day1 午餐</div>
+        </div>
+        <button class="fk-status" data-id="h10">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h11">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多もつ鍋前田屋 博多店</div>
+          <div class="fk-itemnote">9/2 19:30 已訂位 4 人，電話 <a href="tel:05054873803">050-5487-3803</a></div>
+        </div>
+        <button class="fk-status" data-id="h11">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h12">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">牛腸鍋 一藤</div>
+        </div>
+        <button class="fk-status" data-id="h12">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h13">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多名代 吉塚鰻魚屋</div>
+        </div>
+        <button class="fk-status" data-id="h13">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h14">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">菓匠きくたろう 博多店</div>
+        </div>
+        <button class="fk-status" data-id="h14">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h15">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">The Full Full Hakata</div>
+          <div class="fk-itemnote">明太子法國麵包，Day1 外帶候選</div>
+        </div>
+        <button class="fk-status" data-id="h15">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="h16">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Dacomecca（ダコメッカ）</div>
+          <div class="fk-itemnote">Day1 外帶候選</div>
+        </div>
+        <button class="fk-status" data-id="h16">☐ 未完成</button>
+      </div>
+    </details>
+    <details class="fk-area" open>
+      <summary><span>天神（含藥院、渡邊通、赤坂）</span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-subhead">住宿</div>
+      <div class="fk-item" data-id="t1">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">THE GATE HOTEL Fukuoka by HULIC</div>
+          <div class="fk-itemnote">已訂房，訂單 3791-1350-8203 / 3791-1352-6630</div>
+        </div>
+        <button class="fk-status" data-id="t1">☐ 未完成</button>
+      </div>
+      <div class="fk-subhead">逛街</div>
+      <div class="fk-item" data-id="t2">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">岩田屋本店</div>
+          <div class="fk-itemnote">Day2 行程內</div>
+        </div>
+        <button class="fk-status" data-id="t2">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t3">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡三越</div>
+          <div class="fk-itemnote">Day2 行程內</div>
+        </div>
+        <button class="fk-status" data-id="t3">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t4">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Solaria Plaza</div>
+          <div class="fk-itemnote">Day2 行程內</div>
+        </div>
+        <button class="fk-status" data-id="t4">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t5">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡 PARCO 本館</div>
+          <div class="fk-itemnote">年輕品牌，Day2 上午 ★</div>
+        </div>
+        <button class="fk-status" data-id="t5">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t6">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡 PARCO 新館</div>
+          <div class="fk-itemnote">年輕品牌，Day2 上午 ★</div>
+        </div>
+        <button class="fk-status" data-id="t6">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t7">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">大丸 福岡天神店</div>
+          <div class="fk-itemnote">精品，Day2 行程內 ★</div>
+        </div>
+        <button class="fk-status" data-id="t7">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t8">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Dice&amp;Dice</div>
+          <div class="fk-itemnote">今泉／大名</div>
+        </div>
+        <button class="fk-status" data-id="t8">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t9">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">3F 本館（包包店，名稱待確認）</div>
+        </div>
+        <button class="fk-status" data-id="t9">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t10">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">AMI Paris - Fukuoka Daimaru</div>
+        </div>
+        <button class="fk-status" data-id="t10">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t11">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">HARE 福岡パルコ</div>
+          <div class="fk-itemnote">Day2 上午</div>
+        </div>
+        <button class="fk-status" data-id="t11">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t12">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">BEAMS 福岡</div>
+          <div class="fk-itemnote">Day2 上午</div>
+        </div>
+        <button class="fk-status" data-id="t12">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t13">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">URBAN RESEARCH Fukuoka PARCO Store</div>
+          <div class="fk-itemnote">Day2 上午</div>
+        </div>
+        <button class="fk-status" data-id="t13">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t14">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">FREAK'S STORE</div>
+          <div class="fk-itemnote">Day2 上午</div>
+        </div>
+        <button class="fk-status" data-id="t14">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t15">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Maison Margiela Fukuoka Iwataya</div>
+        </div>
+        <button class="fk-status" data-id="t15">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t16">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Maison Kitsuné 福岡</div>
+        </div>
+        <button class="fk-status" data-id="t16">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t17">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Graphpaper Fukuoka</div>
+          <div class="fk-itemnote">Day2 下午</div>
+        </div>
+        <button class="fk-status" data-id="t17">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t18">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">FACTORY</div>
+          <div class="fk-itemnote">Day2 下午</div>
+        </div>
+        <button class="fk-status" data-id="t18">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t19">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">BIOTOP Fukuoka</div>
+          <div class="fk-itemnote">Day2 下午</div>
+        </div>
+        <button class="fk-status" data-id="t19">☐ 未完成</button>
+      </div>
+      <div class="fk-subhead">飲食</div>
+      <div class="fk-item" data-id="t20">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多拉麵 ShinShin 天神本店</div>
+        </div>
+        <button class="fk-status" data-id="t20">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t21">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">麵屋兼虎 天神本店</div>
+        </div>
+        <button class="fk-status" data-id="t21">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t22">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">黑毛和牛 博多和牛まぶし 武藏（天神店）</div>
+          <div class="fk-itemnote">Day3 晚餐</div>
+        </div>
+        <button class="fk-status" data-id="t22">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t23">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">葫蘆壽司（ひょうたん寿司）</div>
+          <div class="fk-itemnote">Day2 午餐</div>
+        </div>
+        <button class="fk-status" data-id="t23">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t24">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Zaisho（在所）</div>
+        </div>
+        <button class="fk-status" data-id="t24">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t25">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Yakitori Koto 焼鳥 古都</div>
+        </div>
+        <button class="fk-status" data-id="t25">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t26">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">炭寅（Sumitora）</div>
+        </div>
+        <button class="fk-status" data-id="t26">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t27">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">元祖牛腸鍋 樂天地 藥院渡邊通店</div>
+        </div>
+        <button class="fk-status" data-id="t27">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t28">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">博多牛雜鍋 Yamanaka 赤坂店</div>
+        </div>
+        <button class="fk-status" data-id="t28">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t29">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">藥院燒肉 NIKUICHI</div>
+          <div class="fk-itemnote">9/3 20:30 已訂位 4 人，預約ID NUYS6N，確定預約</div>
+        </div>
+        <button class="fk-status" data-id="t29">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t30">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">REC COFFEE 藥院站前店</div>
+        </div>
+        <button class="fk-status" data-id="t30">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t31">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">REC COFFEE 天神ワンビル店</div>
+        </div>
+        <button class="fk-status" data-id="t31">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t32">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">豆香洞コーヒースタンド 天神ワンビル店</div>
+        </div>
+        <button class="fk-status" data-id="t32">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t33">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Blue Bottle Coffee Fukuoka Tenjin</div>
+          <div class="fk-itemnote">Day2 下午休息</div>
+        </div>
+        <button class="fk-status" data-id="t33">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t34">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Fuk Coffee</div>
+        </div>
+        <button class="fk-status" data-id="t34">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t35">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">I'm donut? 福岡店</div>
+        </div>
+        <button class="fk-status" data-id="t35">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t36">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Pain Stock Tenjin</div>
+        </div>
+        <button class="fk-status" data-id="t36">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t37">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">光安青霞園茶舖</div>
+        </div>
+        <button class="fk-status" data-id="t37">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="t38">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Stereo Coffee</div>
+        </div>
+        <button class="fk-status" data-id="t38">☐ 未完成</button>
+      </div>
+    </details>
+    <details class="fk-area" open>
+      <summary><span>其他地區（大濠／百道浜／西新／太宰府等）</span><span class="fk-chevron">▸</span></summary>
+      <div class="fk-subhead">景點</div>
+      <div class="fk-item" data-id="o1">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">大濠公園</div>
+        </div>
+        <button class="fk-status" data-id="o1">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o2">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡市美術館</div>
+        </div>
+        <button class="fk-status" data-id="o2">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o3">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">福岡塔</div>
+        </div>
+        <button class="fk-status" data-id="o3">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o4">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">太宰府天滿宮</div>
+          <div class="fk-itemnote">Day3 主行程</div>
+        </div>
+        <button class="fk-status" data-id="o4">☐ 未完成</button>
+      </div>
+      <div class="fk-subhead">飲食</div>
+      <div class="fk-item" data-id="o5">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">Kanekatsu Shokudo（金勝食堂）</div>
+          <div class="fk-itemnote">位置待核對</div>
+        </div>
+        <button class="fk-status" data-id="o5">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o6">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">The Full Full 本店（竹下）</div>
+        </div>
+        <button class="fk-status" data-id="o6">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o7">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">&amp;LOCALS 大濠公園</div>
+        </div>
+        <button class="fk-status" data-id="o7">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o8">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">蕎麥麵 加邊屋 本店</div>
+        </div>
+        <button class="fk-status" data-id="o8">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o9">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">加辺屋 西公園店</div>
+        </div>
+        <button class="fk-status" data-id="o9">☐ 未完成</button>
+      </div>
+      <div class="fk-item" data-id="o10">
+        <div class="fk-iteminfo">
+          <div class="fk-itemname">蜂楽饅頭 福岡西新店</div>
+        </div>
+        <button class="fk-status" data-id="o10">☐ 未完成</button>
+      </div>
+    </details>
+    <div class="fk-tip">提示：新增項目直接複製一列格式修改即可；點右側狀態鈕可切換已完成／未完成（會記在這台裝置的瀏覽器裡，不同裝置或分享給別人看不會同步）。</div>
+  </div>
+
+  <div class="fk-section" id="sec-3">
+    <div class="fk-sectitle"><h2>三、地圖</h2><div class="fk-sechint">切換分頁看區域地圖，下方清單點一下開 Google 地圖</div></div>
+    <div class="fk-maptabs" id="fk-maptabs">
+      <button class="fk-maptab active" data-maparea="hakata">博多</button>
+      <button class="fk-maptab" data-maparea="tenjin">天神</button>
+      <button class="fk-maptab" data-maparea="other">其他地區</button>
+    </div>
+    <div class="fk-mapembed active" data-maparea="hakata">
+      <iframe src="https://www.google.com/maps?q=JR%E5%8D%9A%E5%A4%9A%E9%A7%85&output=embed" loading="lazy" allowfullscreen title="博多地圖"></iframe>
+    </div>
+    <div class="fk-mapembed" data-maparea="tenjin">
+      <iframe src="https://www.google.com/maps?q=%E8%A5%BF%E9%89%84%E7%A6%8F%E5%B2%A1%EF%BC%88%E5%A4%A9%E7%A5%9E%EF%BC%89%E9%A7%85&output=embed" loading="lazy" allowfullscreen title="天神地圖"></iframe>
+    </div>
+    <div class="fk-mapembed" data-maparea="other">
+      <iframe src="https://www.google.com/maps?q=%E5%A4%AA%E5%AE%B0%E5%BA%9C%E5%A4%A9%E6%BA%80%E5%AE%AE&output=embed" loading="lazy" allowfullscreen title="其他地區地圖"></iframe>
+    </div>
+    <details class="fk-area">
+      <summary><span>博多（含博多站、祇園、中洲川端）</span><span class="fk-chevron">▸</span></summary>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E6%AB%9B%E7%94%B0%E7%A5%9E%E7%A4%BE%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>櫛田神社</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%91%E3%83%B3%E3%83%9E%E3%83%B3%E3%81%93%E3%81%A9%E3%82%82%E3%83%9F%E3%83%A5%E3%83%BC%E3%82%B8%E3%82%A2%E3%83%A0" target="_blank" rel="noopener noreferrer"><span>福岡麵包超人兒童博物館</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=AMU%20PLAZA%20Hakata" target="_blank" rel="noopener noreferrer"><span>AMU PLAZA</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=KITTE%20Hakata" target="_blank" rel="noopener noreferrer"><span>KITTE 博多</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%9A%E5%A4%9A%E9%98%AA%E6%80%A5" target="_blank" rel="noopener noreferrer"><span>博多阪急</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=BALLER'S%20%E7%A6%8F%E5%B2%A1%20%E3%83%90%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB" target="_blank" rel="noopener noreferrer"><span>BALLER'S</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=ballaholic%20Hub%20FUKUOKA" target="_blank" rel="noopener noreferrer"><span>ballaholic Hub FUKUOKA</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E8%98%AD%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%20%E7%B7%8F%E6%9C%AC%E5%BA%97%20%E7%A6%8F%E5%B2%A1%20%E4%B8%AD%E6%B4%B2" target="_blank" rel="noopener noreferrer"><span>一蘭拉麵 總本店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%9A%E5%A4%9A%E4%B8%80%E5%8F%8C%20%E4%B8%AD%E6%B4%B2%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>博多一雙拉麵店（中洲店）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%9A%E5%A4%9A%E4%B8%80%E5%8F%8C%20%E5%8D%9A%E5%A4%9A%E9%A7%85%E6%9D%B1%E6%9C%AC%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>博多一雙 祇園店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://maps.app.goo.gl/VRjecYPJ8jCqBRV27?g_st=ic" target="_blank" rel="noopener noreferrer"><span>博多もつ鍋前田屋 博多店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%82%82%E3%81%A4%E9%8D%8B%E4%B8%80%E8%97%A4%20%E5%8D%9A%E5%A4%9A" target="_blank" rel="noopener noreferrer"><span>牛腸鍋 一藤</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%90%89%E5%A1%9A%E3%81%86%E3%81%AA%E3%81%8E%E5%B1%8B%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>博多名代 吉塚鰻魚屋</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E8%8F%93%E5%8C%A0%E3%81%8D%E3%81%8F%E3%81%9F%E3%82%8D%E3%81%86%20%E5%8D%9A%E5%A4%9A%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>菓匠きくたろう 博多店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=The%20Full%20Full%20Hakata%20Fukuoka" target="_blank" rel="noopener noreferrer"><span>The Full Full Hakata</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Dacomecca%20%E3%83%80%E3%82%B3%E3%83%A1%E3%83%83%E3%82%AB%20%E5%8D%9A%E5%A4%9A" target="_blank" rel="noopener noreferrer"><span>Dacomecca（ダコメッカ）</span><span class="fk-arrow">↗</span></a>
+    </details>
+    <details class="fk-area">
+      <summary><span>天神（含藥院、渡邊通、赤坂）</span><span class="fk-chevron">▸</span></summary>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=THE%20GATE%20HOTEL%20Fukuoka%20by%20HULIC" target="_blank" rel="noopener noreferrer"><span>THE GATE HOTEL Fukuoka by HULIC</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%B2%A9%E7%94%B0%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>岩田屋本店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E4%B8%89%E8%B6%8A" target="_blank" rel="noopener noreferrer"><span>福岡三越</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%82%BD%E3%83%A9%E3%83%AA%E3%82%A2%E3%83%97%E3%83%A9%E3%82%B6%20%E5%A4%A9%E7%A5%9E" target="_blank" rel="noopener noreferrer"><span>Solaria Plaza</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Fukuoka%20PARCO" target="_blank" rel="noopener noreferrer"><span>福岡 PARCO 本館</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1PARCO%20%E6%96%B0%E9%A4%A8" target="_blank" rel="noopener noreferrer"><span>福岡 PARCO 新館</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E4%B8%B8%20%E7%A6%8F%E5%B2%A1%E5%A4%A9%E7%A5%9E%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>大丸 福岡天神店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Dice%20%26%20Dice%20Fukuoka" target="_blank" rel="noopener noreferrer"><span>Dice&amp;Dice</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=3F%20%E6%9C%AC%E9%A4%A8%20%E5%8C%85%E5%8C%85%E5%BA%97%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>3F 本館（包包店，名稱待確認）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=AMI%20Paris%20Fukuoka%20Daimaru" target="_blank" rel="noopener noreferrer"><span>AMI Paris - Fukuoka Daimaru</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=HARE%20%E7%A6%8F%E5%B2%A1%E3%83%91%E3%83%AB%E3%82%B3" target="_blank" rel="noopener noreferrer"><span>HARE 福岡パルコ</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=BEAMS%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>BEAMS 福岡</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=URBAN%20RESEARCH%20Fukuoka%20PARCO" target="_blank" rel="noopener noreferrer"><span>URBAN RESEARCH Fukuoka PARCO Store</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=FREAK'S%20STORE%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>FREAK'S STORE</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Maison%20Margiela%20Fukuoka%20Iwataya" target="_blank" rel="noopener noreferrer"><span>Maison Margiela Fukuoka Iwataya</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Maison%20Kitsun%C3%A9%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>Maison Kitsuné 福岡</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Graphpaper%20Fukuoka" target="_blank" rel="noopener noreferrer"><span>Graphpaper Fukuoka</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=FACTORY%20Fukuoka%20clothing" target="_blank" rel="noopener noreferrer"><span>FACTORY</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=BIOTOP%20Fukuoka" target="_blank" rel="noopener noreferrer"><span>BIOTOP Fukuoka</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%9A%E5%A4%9A%E3%82%89%E3%83%BC%E3%82%81%E3%82%93ShinShin%20%E5%A4%A9%E7%A5%9E%E6%9C%AC%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>博多拉麵 ShinShin 天神本店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E9%BA%B5%E5%B1%8B%E5%85%BC%E8%99%8E%20%E7%A6%8F%E5%B2%A1PARCO%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>麵屋兼虎 天神本店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%9A%E5%A4%9A%E5%92%8C%E7%89%9B%E3%81%BE%E3%81%B6%E3%81%97%20%E6%AD%A6%E8%94%B5%20%E5%A4%A9%E7%A5%9E%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>黑毛和牛 博多和牛まぶし 武藏（天神店）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%81%B2%E3%82%87%E3%81%86%E3%81%9F%E3%82%93%E5%AF%BF%E5%8F%B8%20%E7%A6%8F%E5%B2%A1%E5%A4%A9%E7%A5%9E" target="_blank" rel="noopener noreferrer"><span>葫蘆壽司（ひょうたん寿司）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Zaisho%20%E5%AF%BF%E5%8F%B8%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>Zaisho（在所）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Yakitori%20Koto%20%E7%84%BC%E9%B3%A5%20%E5%8F%A4%E9%83%BD%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>Yakitori Koto 焼鳥 古都</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%82%AD%E5%AF%85%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>炭寅（Sumitora）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%85%83%E7%A5%96%E3%82%82%E3%81%A4%E9%8D%8B%E6%A5%BD%E5%A4%A9%E5%9C%B0%20%E8%96%AC%E9%99%A2%E6%B8%A1%E8%BE%BA%E9%80%9A%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>元祖牛腸鍋 樂天地 藥院渡邊通店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%82%82%E3%81%A4%E9%8D%8B%E3%82%84%E3%81%BE%E3%81%AA%E3%81%8B%20%E8%B5%A4%E5%9D%82%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>博多牛雜鍋 Yamanaka 赤坂店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E8%96%AC%E9%99%A2%E7%84%BC%E8%82%89%20%E8%82%89%E4%B8%80%20NIKUICHI" target="_blank" rel="noopener noreferrer"><span>藥院燒肉 NIKUICHI</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=REC%20COFFEE%20%E8%96%AC%E9%99%A2%E9%A7%85%E5%89%8D%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>REC COFFEE 藥院站前店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=REC%20COFFEE%20%E5%A4%A9%E7%A5%9E%E3%83%AF%E3%83%B3%E3%83%93%E3%83%AB%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>REC COFFEE 天神ワンビル店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E8%B1%86%E9%A6%99%E6%B4%9E%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89%20%E5%A4%A9%E7%A5%9E%E3%83%AF%E3%83%B3%E3%83%93%E3%83%AB" target="_blank" rel="noopener noreferrer"><span>豆香洞コーヒースタンド 天神ワンビル店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Blue%20Bottle%20Coffee%20Fukuoka%20Tenjin" target="_blank" rel="noopener noreferrer"><span>Blue Bottle Coffee Fukuoka Tenjin</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Fuk%20Coffee%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>Fuk Coffee</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=I'm%20donut%20%E7%A6%8F%E5%B2%A1%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>I'm donut? 福岡店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Pain%20Stock%20%E3%83%91%E3%83%B3%E3%82%B9%E3%83%88%E3%83%83%E3%82%AF%20%E5%A4%A9%E7%A5%9E" target="_blank" rel="noopener noreferrer"><span>Pain Stock Tenjin</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%85%89%E5%AE%89%E9%9D%92%E9%9C%9E%E5%9C%92%E8%8C%B6%E8%88%97" target="_blank" rel="noopener noreferrer"><span>光安青霞園茶舖</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Stereo%20Coffee%20Fukuoka" target="_blank" rel="noopener noreferrer"><span>Stereo Coffee</span><span class="fk-arrow">↗</span></a>
+    </details>
+    <details class="fk-area">
+      <summary><span>其他地區（大濠／百道浜／西新／太宰府等）</span><span class="fk-chevron">▸</span></summary>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E6%BF%A0%E5%85%AC%E5%9C%92%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>大濠公園</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E5%B8%82%E7%BE%8E%E8%A1%93%E9%A4%A8" target="_blank" rel="noopener noreferrer"><span>福岡市美術館</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E3%82%BF%E3%83%AF%E3%83%BC" target="_blank" rel="noopener noreferrer"><span>福岡塔</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%AA%E5%AE%B0%E5%BA%9C%E5%A4%A9%E6%BA%80%E5%AE%AE" target="_blank" rel="noopener noreferrer"><span>太宰府天滿宮</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E5%8B%9D%E9%A3%9F%E5%A0%82%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>Kanekatsu Shokudo（金勝食堂）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=Full%20Full%20%E6%9C%AC%E5%BA%97%20%E7%AB%B9%E4%B8%8B%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>The Full Full 本店（竹下）</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%26LOCALS%20%E5%A4%A7%E6%BF%A0%E5%85%AC%E5%9C%92" target="_blank" rel="noopener noreferrer"><span>&amp;LOCALS 大濠公園</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%81%9D%E3%81%B0%E3%81%AE%E5%8A%A0%E8%BE%BA%E5%B1%8B%20%E6%9C%AC%E5%BA%97%20%E7%A6%8F%E5%B2%A1" target="_blank" rel="noopener noreferrer"><span>蕎麥麵 加邊屋 本店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E8%BE%BA%E5%B1%8B%20%E8%A5%BF%E5%85%AC%E5%9C%92%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>加辺屋 西公園店</span><span class="fk-arrow">↗</span></a>
+      <a class="fk-maplink" href="https://www.google.com/maps/search/?api=1&query=%E8%9C%82%E6%A5%BD%E9%A5%85%E9%A0%AD%20%E8%A5%BF%E6%96%B0%E5%BA%97" target="_blank" rel="noopener noreferrer"><span>蜂楽饅頭 福岡西新店</span><span class="fk-arrow">↗</span></a>
+    </details>
+    <div class="fk-tip">新增連結格式：<code>https://www.google.com/maps/search/?api=1&amp;query=店名或地址</code>，把「店名或地址」換成想找的地點即可。</div>
+  </div>
+
+  <div class="fk-footer">
+    <div>最後更新：2026/08/28</div>
+    <div>行程期間持續更新中 ✎</div>
+  </div>
+
+</div>
+</div>
+
+<button class="fk-top" id="fk-top-btn" aria-label="回到頂端">↑</button>
+
+<nav class="fk-bottomnav" id="fk-bottomnav">
+  <a href="#sec-1" data-nav="sec-1"><span class="fk-bn-icon">🗓️</span>行程表</a>
+  <a href="#sec-2" data-nav="sec-2"><span class="fk-bn-icon">✅</span>清單</a>
+  <a href="#sec-3" data-nav="sec-3"><span class="fk-bn-icon">📍</span>地圖</a>
+</nav>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'fukuoka-trip-2026-done';
+  var doneSet = {};
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) doneSet = JSON.parse(raw) || {};
+  } catch (e) {}
+
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(doneSet)); } catch (e) {}
+  }
+
+  function applyState(btn) {
+    var id = btn.getAttribute('data-id');
+    var item = btn.closest('.fk-item');
+    var isDone = !!doneSet[id];
+    btn.textContent = isDone ? '☑ 已完成' : '☐ 未完成';
+    btn.classList.toggle('done', isDone);
+    if (item) item.classList.toggle('is-done', isDone);
+  }
+
+  var statusButtons = document.querySelectorAll('.fk-status');
+
+  var progressFill = document.getElementById('fk-progress-fill');
+  var progressLabel = document.getElementById('fk-progress-label');
+  function updateProgress() {
+    var total = statusButtons.length;
+    var done = 0;
+    statusButtons.forEach(function (btn) {
+      if (doneSet[btn.getAttribute('data-id')]) done++;
+    });
+    if (progressFill) progressFill.style.width = (total ? (done / total * 100) : 0) + '%';
+    if (progressLabel) progressLabel.textContent = done + ' / ' + total;
+  }
+
+  statusButtons.forEach(function (btn) {
+    applyState(btn);
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-id');
+      doneSet[id] = !doneSet[id];
+      save();
+      applyState(btn);
+      applyFilter(currentFilter);
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  var currentFilter = 'all';
+  function applyFilter(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.fk-item').forEach(function (item) {
+      var isDone = item.classList.contains('is-done');
+      var show = filter === 'all' || (filter === 'done' && isDone) || (filter === 'todo' && !isDone);
+      item.classList.toggle('fk-hide', !show);
+    });
+  }
+  document.querySelectorAll('.fk-filterbtn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.fk-filterbtn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+
+  var topBtn = document.getElementById('fk-top-btn');
+  window.addEventListener('scroll', function () {
+    topBtn.classList.toggle('show', window.scrollY > 400);
+  });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 自動聚焦今天的行程
+  (function () {
+    var days = document.querySelectorAll('.fk-day[data-date]');
+    var todayStr = new Date().toISOString().slice(0, 10);
+    var matched = null;
+    days.forEach(function (d) {
+      if (d.getAttribute('data-date') === todayStr) matched = d;
+    });
+    if (matched) {
+      days.forEach(function (d) { d.open = (d === matched); });
+      var tag = matched.querySelector('[data-today-tag]');
+      if (tag) tag.style.display = '';
+    } else {
+      var first = document.getElementById('fk-day-1');
+      if (first) first.open = true;
+    }
+  })();
+
+  // 地圖分頁切換
+  document.querySelectorAll('.fk-maptab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var area = tab.getAttribute('data-maparea');
+      document.querySelectorAll('.fk-maptab').forEach(function (t) { t.classList.toggle('active', t === tab); });
+      document.querySelectorAll('.fk-mapembed').forEach(function (m) { m.classList.toggle('active', m.getAttribute('data-maparea') === area); });
+    });
+  });
+
+  // 底部導覽列 active 狀態（依捲動位置）
+  var bottomLinks = document.querySelectorAll('.fk-bottomnav a');
+  if (bottomLinks.length) {
+    var navSections = ['sec-1', 'sec-2', 'sec-3'].map(function (id) { return document.getElementById(id); });
+    var updateBottomNav = function () {
+      var scrollPos = window.scrollY + 100;
+      var current = navSections[0] && navSections[0].id;
+      navSections.forEach(function (sec) {
+        if (sec && sec.offsetTop <= scrollPos) current = sec.id;
+      });
+      bottomLinks.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('data-nav') === current);
+      });
+    };
+    window.addEventListener('scroll', updateBottomNav);
+    updateBottomNav();
+  }
+})();
+</script>
+
+</body></html>
